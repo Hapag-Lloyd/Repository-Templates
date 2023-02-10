@@ -28,10 +28,11 @@ A Terraform module should at least provide 3 examples
 2. `examples/simple`: for a quick and easy demonstration
 3. `examples/full`: for a full blown example
 
-So far it runs a `terraform validate` for all examples and the Terraform minimum version (insert in the workflow file!)
+It runs a `terraform validate` for all examples and the Terraform minimum version (insert in the workflow file!)
 and the latest Terraform version.
 
-Planned:
+In addition `tflint` is also executed.
 
-- integrate TfLint
+## Planned:
+
 - integrate Infracost
