@@ -48,7 +48,7 @@ jobs:
       - name: Init TFLint
         run: tflint --config=.config/tflint.hcl --init
 
-    # needs OIDC setup for credentials
-    # https://github.com/aws-actions/configure-aws-credentials
-    # - name: Run TFLint
-    #   run: tflint --config=.config/tflint.hcl -f compact
+      # needs OIDC setup for credentials
+      # https://github.com/aws-actions/configure-aws-credentials
+      # - name: Run TFLint
+      #   run: tflint --config=.config/tflint.hcl -f compact
