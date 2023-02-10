@@ -33,6 +33,6 @@ and the latest Terraform version.
 
 In addition `tflint` is also executed.
 
-## Planned:
+## Planned
 
 - integrate Infracost
