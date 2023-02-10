@@ -5,6 +5,10 @@ name: Terraform
 on:
   pull_request:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -31,8 +35,6 @@ jobs:
 
   tflint:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/terraform-linters/tflint:v0.44.1@sha256:d7a49b9287c5d47566e664431ccfb2d7769bb8dc3bf544fa0145e6ba1479d153
     steps:
       - uses: actions/checkout@v3.3.0
 
@@ -42,13 +44,27 @@ jobs:
           path: ~/.tflint.d/plugins
           key: tflint-${{ hashFiles('.config/tflint.hcl') }}
 
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
+          role-session-name: tflint
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: install tflint
+        run: |
+          # renovate: datasource=github-tags depName=terraform-linters/tflint
+          tflint_version="0.44.1"
+
+          curl -o tflint.zip -L \
+            https://github.com/terraform-linters/tflint/releases/download/v${tflint_version}/tflint_linux_amd64.zip
+          unzip tflint.zip
+
       - name: Show version
-        run: tflint --config=.config/tflint.hcl --version
+        run: ./tflint --config=.config/tflint.hcl --version
 
       - name: Init TFLint
-        run: tflint --config=.config/tflint.hcl --init
+        run: ./tflint --config=.config/tflint.hcl --init
 
-        # needs OIDC setup for credentials
-        # https://github.com/aws-actions/configure-aws-credentials
-        # - name: Run TFLint
-        #   run: tflint --config=.config/tflint.hcl -f compact
+      - name: Run TFLint
+        run: ./tflint --config=.config/tflint.hcl -f compact
