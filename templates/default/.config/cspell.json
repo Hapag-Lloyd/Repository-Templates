@@ -1,0 +1,22 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": ["cpus", "Hapag", "Infracost", "oidc", "tflint", "tfsec"],
+  "ignoreWords": [
+    "amannn",
+    "codeowners",
+    "codeql",
+    "datasource",
+    "dorny",
+    "ibiqlik",
+    "kayman",
+    "ludeeus",
+    "markdownlint",
+    "rhysd",
+    "ruleset",
+    "sarif",
+    "shuf",
+    "shunsuke",
+    "signoff"
+  ]
+}
