@@ -33,5 +33,5 @@ and the latest Terraform version.
 
 Planned:
 
-- integrate TfLint
+- integrate TfLintt
 - integrate Infracost
