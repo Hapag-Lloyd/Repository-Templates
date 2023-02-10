@@ -23,6 +23,7 @@ Renovate automatically proposes a PR if a dependency is out of date.
 The templates are stored in `templates/terraform-module`.
 
 A Terraform module should at least provide 3 examples
+
 1. `examples/cost`: for infrastructure cost calculation
 2. `examples/simple`: for a quick and easy demonstration
 3. `examples/full`: for a full blown example
@@ -31,5 +32,6 @@ So far it runs a `terraform validate` for all examples and the Terraform minimum
 and the latest Terraform version.
 
 Planned:
-  - integrate TfLint
-  - integrate Infracost
+
+- integrate TfLint
+- integrate Infracost
