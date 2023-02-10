@@ -1,6 +1,17 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": [],
-  "ignoreWords": []
+  "words": ["cpus"],
+  "ignoreWords": [
+    "amannn",
+    "codeowners",
+    "dorny",
+    "ibikliq",
+    "kayman",
+    "markdownlint",
+    "rhysd",
+    "shuf",
+    "shunsuke",
+    "signoff"
+  ]
 }
