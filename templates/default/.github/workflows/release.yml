@@ -7,6 +7,10 @@ on:
     branches:
       - main
 
+permissions:
+  # to create protected tags
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
