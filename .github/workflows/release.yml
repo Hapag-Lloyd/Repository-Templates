@@ -7,11 +7,6 @@ on:
     branches:
       - main
 
-permissions:
-  # to create protected tags
-  contents: write
-  pull-requests: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -19,5 +14,7 @@ jobs:
       - name: Release
         uses: google-github-actions/release-please-action@v3.7.3
         with:
+          # to create protected tags
+          token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
           release-type: simple
           signoff: "Matthias Kay <matthias.kay@hlag.com>"
