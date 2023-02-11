@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.2.0...v1.2.1) (2023-02-11)
+
+
+### Bug Fixes
+
+* use PAT for Release-Please ([#18](https://github.com/Hapag-Lloyd/Repository-Templates/issues/18)) ([e957ead](https://github.com/Hapag-Lloyd/Repository-Templates/commit/e957eadd90b631fc1cfb34399e3e7b7830497630))
+
 ## [1.2.0](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.1.0...v1.2.0) (2023-02-11)
 
 
