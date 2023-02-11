@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.1.0...v1.2.0) (2023-02-11)
+
+
+### Features
+
+* add stale workflow for issues and PRs ([#14](https://github.com/Hapag-Lloyd/Repository-Templates/issues/14)) ([4912c2f](https://github.com/Hapag-Lloyd/Repository-Templates/commit/4912c2fab70b9557dd32878439b53c754330cae8))
+
+
+### Bug Fixes
+
+* allow release process to create protected tags ([#16](https://github.com/Hapag-Lloyd/Repository-Templates/issues/16)) ([583c655](https://github.com/Hapag-Lloyd/Repository-Templates/commit/583c655d6fd699129350f6e1417235fd3db07e36))
+* allow release workflow to create PR ([#17](https://github.com/Hapag-Lloyd/Repository-Templates/issues/17)) ([40d25ee](https://github.com/Hapag-Lloyd/Repository-Templates/commit/40d25ee75d777987044b853b7c2775f2423173ef))
+
 ## [1.1.0](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.0.0...v1.1.0) (2023-02-10)
 
 
