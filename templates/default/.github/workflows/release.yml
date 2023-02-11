@@ -10,6 +10,7 @@ on:
 permissions:
   # to create protected tags
   contents: write
+  pull-requests: write
 
 jobs:
   release:
