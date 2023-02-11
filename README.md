@@ -5,7 +5,7 @@ This repository stores templates used to setup new repositories. The templates a
 ## Default Templates
 
 Stored in `templates/default` and added to every new project. Contains a set of linters, release management, ChatOps
-tools and a welcome message for contributors as well as a contribution guideline.
+tools, stale issue and PR management and a welcome message for contributors as well as a contribution guideline.
 
 To ensure a high quality of committed files, a [pre-commit](https://pre-commit.com/) configuration is also provided and
 can be installed with `pre-commit install`. The default configuration detects the most common errors in the code and
