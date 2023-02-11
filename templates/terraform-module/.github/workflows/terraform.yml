@@ -49,7 +49,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
           role-session-name: tflint
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: install tflint
         run: |
