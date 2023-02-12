@@ -27,7 +27,7 @@ jobs:
             template-workflow:
               - 'templates/**/.github/workflows/*.yml'
               - 'templates/**/.github/workflows/*.yaml'
-              
+
             workflow:
               - '.github/workflows/*.yml'
               - '.github/workflows/*.yaml'
@@ -113,12 +113,12 @@ jobs:
       - name: Validate Github workflow templates
         run: |
           mkdir .git
-          
+
           while IFS= read -r -d '' dir
           do
             find "$dir" -name "*.yml" -print0 -exec xargs -0 actionlint -color {} \;
           done <   <(find templates/ -type d -name "workflows")
-          
+
   lint-yaml:
     runs-on: ubuntu-latest
     continue-on-error: true
