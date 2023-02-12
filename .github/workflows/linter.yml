@@ -92,6 +92,8 @@ jobs:
         run: |
           mkdir .git
           actionlint -color
+          
+          find templates/ -name "*.yml" -print0 | xargs -0 actionlint -color {} \;
 
   lint-yaml:
     runs-on: ubuntu-latest
