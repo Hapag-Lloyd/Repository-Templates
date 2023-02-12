@@ -21,8 +21,10 @@ jobs:
       run:
         working-directory: ${{ matrix.directories }}
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
 
+      # yamllint disable-line rule:comments
       - uses: hashicorp/setup-terraform@v2.0.3
         with:
           terraform_version: ${{ matrix.terraform }}
@@ -36,8 +38,10 @@ jobs:
   tflint:
     runs-on: ubuntu-latest
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
 
+      # yamllint disable-line rule:comments
       - uses: actions/cache@v3.2.5
         name: Cache plugin dir
         with:
@@ -45,6 +49,7 @@ jobs:
           key: tflint-${{ hashFiles('.config/tflint.hcl') }}
 
       - name: configure aws credentials
+        # yamllint disable-line rule:comments
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
