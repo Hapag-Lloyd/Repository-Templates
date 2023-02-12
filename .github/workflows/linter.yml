@@ -24,6 +24,10 @@ jobs:
               - 'renovate.json'
               - 'default.json'
 
+            template-workflow:
+              - 'templates/**/.github/workflows/*.yml'
+              - 'templates/**/.github/workflows/*.yaml'
+
             workflow:
               - '.github/workflows/*.yml'
               - '.github/workflows/*.yaml'
@@ -35,6 +39,7 @@ jobs:
       json: ${{ steps.changes.outputs.json }}
       markdown: ${{ steps.changes.outputs.markdown }}
       renovate-config: ${{ steps.changes.outputs.renovate-config }}
+      template-workflow: ${{ steps.changes.outputs.workflow }}
       workflow: ${{ steps.changes.outputs.workflow }}
       yaml: ${{ steps.changes.outputs.yaml }}
 
@@ -92,6 +97,26 @@ jobs:
         run: |
           mkdir .git
           actionlint -color
+
+  lint-template-workflow:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: find-changes
+    if: needs.find-changes.outputs.template-workflow == 'true'
+    container:
+      image: rhysd/actionlint:1.6.23@sha256:02ccb6d91e4cb4a7b21eb99d5274d257e81ae667688d730e89d7ea0d6d35db91
+      options: --cpus 1 --user root
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Validate Github workflow templates
+        run: |
+          mkdir .git
+
+          for file in templates/**/.github/workflows/*.yml; do
+            actionlint -color "$file"
+          done
 
   lint-yaml:
     runs-on: ubuntu-latest
