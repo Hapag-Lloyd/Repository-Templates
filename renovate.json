@@ -1,6 +1,6 @@
 {
   "extends": ["github>Hapag-Lloyd/Renovate-Global-Configuration"],
-  "dockerfile": {
+  "github-actions": {
     "fileMatch": [
       "^templates\\/.*\\/\\.github\\/workflows\\/[^/]+\\.ya?ml$",
       "^(workflow-templates|\\.github\\/workflows)\\/[^/]+\\.ya?ml$",
