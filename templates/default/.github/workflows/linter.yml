@@ -9,6 +9,7 @@ jobs:
   find-changes:
     runs-on: ubuntu-latest
     steps:
+      # yamllint disable-line rule:comments
       - uses: dorny/paths-filter@v2.11.1
         id: changes
         with:
@@ -43,6 +44,7 @@ jobs:
     if: needs.find-changes.outputs.json == 'true'
     needs: find-changes
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
 
       - name: Run JSON Lint
@@ -54,6 +56,7 @@ jobs:
     if: needs.find-changes.outputs.markdown == 'true'
     needs: find-changes
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
 
       - name: Validate Markdown file
@@ -67,17 +70,21 @@ jobs:
     if: needs.find-changes.outputs.renovate-config == 'true'
     needs: find-changes
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
 
+      # yamllint disable-line rule:comments
       - uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.2
 
   lint-shell:
     name: Check shell scripts
     runs-on: ubuntu-latest
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
 
       - name: ShellCheck
+        # yamllint disable-line rule:comments
         uses: ludeeus/action-shellcheck@2.0.0
 
   lint-workflow:
@@ -89,7 +96,9 @@ jobs:
       image: rhysd/actionlint:1.6.22@sha256:5f957b2a08d223e48133e1a914ed046bea12e578fe2f6ae4de47fdbe691a2468
       options: --cpus 1 --user root
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
+
       - name: Validate Github workflows
         run: |
           mkdir .git
@@ -101,8 +110,11 @@ jobs:
     needs: find-changes
     if: needs.find-changes.outputs.yaml == 'true'
     steps:
+      # yamllint disable-line rule:comments
       - uses: actions/checkout@v3.3.0
+
       - name: yaml-lint
+        # yamllint disable-line rule:comments
         uses: ibiqlik/action-yamllint@v3.1.1
         with:
           config_file: .config/yamllint.yml
