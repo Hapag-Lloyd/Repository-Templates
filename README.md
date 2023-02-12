@@ -2,6 +2,9 @@
 
 This repository stores templates used to setup new repositories. The templates are stored in `templates/`.
 
+Use `scripts/update_workflows.sh repo_to_update` to create a PR updating all files present in this repository. The
+script can be used to quickly update all workflows and other setup files.
+
 ## Default Templates
 
 Stored in `templates/default` and added to every new project. Contains a set of linters, release management, ChatOps
