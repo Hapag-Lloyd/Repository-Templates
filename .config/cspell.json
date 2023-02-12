@@ -24,6 +24,7 @@
     "rhysd",
     "ruleset",
     "sarif",
+    "shellcheck",
     "shuf",
     "shunsuke",
     "signoff"
