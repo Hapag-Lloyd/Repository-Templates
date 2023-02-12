@@ -110,13 +110,14 @@ jobs:
       # yamllint disable-line rule:comments
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
-      - name: Validate Github workflows
+      - name: Validate Github workflow templates
         run: |
           mkdir .git
           
-          for d in $(find templates/ -type d -name "workflows"); do
-            find "$d" -name "*.yml" -print0 -exec xargs -0 actionlint -color {} \;
-          done
+          while IFS= read -r -d '' dir
+          do
+            find "$dir" -name "*.yml" -print0 -exec xargs -0 actionlint -color {} \;
+          done <   <(find templates/ -type d -name "workflows")
           
   lint-yaml:
     runs-on: ubuntu-latest
