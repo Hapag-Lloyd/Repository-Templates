@@ -117,7 +117,7 @@ jobs:
           while IFS= read -r -d '' dir
           do
             find "$dir" -name "*.yml" -print0 -exec xargs -0 actionlint -color {} \;
-          done <   <(find templates/ -type d -name "workflows")
+          done <   <(find templates/ -type d -name "workflows" -print0)
 
   lint-yaml:
     runs-on: ubuntu-latest
