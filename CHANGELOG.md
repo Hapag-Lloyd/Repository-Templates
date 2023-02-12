@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.2.1...v1.3.0) (2023-02-12)
+
+
+### Features
+
+* add shell script to update other repositories with newest version ([#25](https://github.com/Hapag-Lloyd/Repository-Templates/issues/25)) ([e0c82a0](https://github.com/Hapag-Lloyd/Repository-Templates/commit/e0c82a07c6a73c96e2970858a78dadc276030529))
+* use the `AWS_REGION` from secrets for TfLint ([#20](https://github.com/Hapag-Lloyd/Repository-Templates/issues/20)) ([aa699a6](https://github.com/Hapag-Lloyd/Repository-Templates/commit/aa699a6c8e9b02f9c0ff685e6ed0ff346326ae48))
+
 ## [1.2.1](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.2.0...v1.2.1) (2023-02-11)
 
 
