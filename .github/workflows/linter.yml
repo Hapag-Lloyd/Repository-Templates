@@ -114,10 +114,9 @@ jobs:
         run: |
           mkdir .git
 
-          while IFS= read -r -d '' dir
-          do
-            find "$dir" -name "*.yml" -type f -print0 -exec xargs -0 actionlint -color {} \;
-          done <   <(find templates/ -type d -name "workflows" -print0)
+          for file in templates/**/.github/workflows/*.yml; do
+            actionlint -color "$file"
+          done
 
   lint-yaml:
     runs-on: ubuntu-latest
