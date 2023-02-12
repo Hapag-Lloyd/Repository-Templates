@@ -1,7 +1,15 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": ["cpus", "Hapag", "Infracost", "oidc", "tflint", "tfsec"],
+  "words": [
+    "cpus",
+    "Hapag",
+    "Infracost",
+    "oidc",
+    "Repology",
+    "tflint",
+    "tfsec"
+  ],
   "ignoreWords": [
     "amannn",
     "codeowners",
@@ -12,6 +20,7 @@
     "kayman",
     "ludeeus",
     "markdownlint",
+    "mktemp",
     "rhysd",
     "ruleset",
     "sarif",
