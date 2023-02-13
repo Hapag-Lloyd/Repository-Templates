@@ -1,0 +1,12 @@
+name: Approve all Renovate PRs automatically
+
+on: pull_request_target
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: github.actor == 'kayman-mk'
+    steps:
+      - uses: hmarr/auto-approve-action@de8ae18c173c131e182d4adf2c874d8d2308a85b # 3.1.0
