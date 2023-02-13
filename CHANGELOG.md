@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.3.0...v1.4.0) (2023-02-13)
+
+
+### Features
+
+* approve Renovate PRs automatically ([#35](https://github.com/Hapag-Lloyd/Repository-Templates/issues/35)) ([b313b79](https://github.com/Hapag-Lloyd/Repository-Templates/commit/b313b79f168d42a2501194afa018077a8e979c8c))
+
+
+### Bug Fixes
+
+* add missing configuration files ([#37](https://github.com/Hapag-Lloyd/Repository-Templates/issues/37)) ([57ca4b8](https://github.com/Hapag-Lloyd/Repository-Templates/commit/57ca4b81ff9f56e15d944050ac3ba8077709e7ff))
+
 ## [1.3.0](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.2.1...v1.3.0) (2023-02-12)
 
 
