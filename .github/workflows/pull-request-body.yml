@@ -19,15 +19,13 @@ jobs:
       - uses: actions/github-script@v6
         id: get-body
         with:
+          result-encoding: string
           script: |
-            pr = await github.rest.pulls.get({
+            return await github.rest.pulls.get({
               pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-            })
+            }).data.body
 
-            console.log(pr)
-
-            return pr
       - name: Spell Check
         run: echo "${{steps.get-body.outputs.result}}"
