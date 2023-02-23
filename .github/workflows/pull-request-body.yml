@@ -1,0 +1,29 @@
+---
+name: "Pull Request Spell Check"
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+    branches-ignore:
+      - "release-please--branches--*"
+
+jobs:
+  main:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        id: get-body
+        with:
+          script: |
+            return github.rest.issues.get({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })['body']
+      - name: Spell Check
+        run: echo "${{steps.get-body.outputs.result}}"
