@@ -18,7 +18,8 @@ jobs:
     steps:
       - name: Get Body
         run: |
-          curl -v -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X GET https://api.github.com/repos/${{ context.repo.owner }}/${{ context.repo.repo }}/pulls/${{ context.issue.number }}
+          PR_NUMBER=$(echo ${{ github.ref }} | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          curl -v -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X GET https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER
 
       - uses: actions/github-script@v6
         id: get-body
