@@ -1,5 +1,5 @@
 ---
-name: "Pull Request Spell Check"
+name: "Pull Request"
 
 # yamllint disable-line rule:truthy
 on:
@@ -20,7 +20,7 @@ jobs:
         id: get-body
         with:
           script: |
-            return github.rest.pulls.get({
+            return await github.rest.pulls.get({
               pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
