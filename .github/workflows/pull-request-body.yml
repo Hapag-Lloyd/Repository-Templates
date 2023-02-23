@@ -20,8 +20,8 @@ jobs:
         id: get-body
         with:
           script: |
-            return github.rest.issues.get({
-              issue_number: context.issue.number,
+            return github.rest.pulls.get({
+              pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
             })['body']
