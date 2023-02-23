@@ -1,0 +1,28 @@
+---
+name: "Pull Request"
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+    branches-ignore:
+      - "release-please--branches--*"
+
+jobs:
+  main:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Body
+        id: get-body
+        run: |
+          PR_NUMBER=$(echo ${{ github.ref }} | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X GET https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER | jq -r .body > body.txt
+
+          cat body.txt
+
+      - name: Spell Check
+        run: echo "${{steps.get-body.outputs.body}}"
