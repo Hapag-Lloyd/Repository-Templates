@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.4.0...v1.4.1) (2023-11-19)
+
+
+### Bug Fixes
+
+* use app token for release process ([#53](https://github.com/Hapag-Lloyd/Repository-Templates/issues/53)) ([fbed584](https://github.com/Hapag-Lloyd/Repository-Templates/commit/fbed584ee5c1cafd509ba4b8f685bd2203f3222d))
+
 ## [1.4.0](https://github.com/Hapag-Lloyd/Repository-Templates/compare/v1.3.0...v1.4.0) (2023-02-13)
 
 
