@@ -13,6 +13,6 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       # yamllint disable-line rule:comments
-      - uses: streetsidesoftware/cspell-action@c8855adc59d29c3fc73b5453b16717947c3f050c # v2.26.3
+      - uses: streetsidesoftware/cspell-action@52cba17693dc12d7d8f521631037008a17c93e53 # v5.0.0
         with:
           config: .config/cspell.json
