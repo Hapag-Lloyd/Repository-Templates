@@ -9,7 +9,6 @@ jobs:
   find-changes:
     runs-on: ubuntu-latest
     steps:
-      # yamllint disable-line rule:comments
       - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
         id: changes
         with:
@@ -44,7 +43,6 @@ jobs:
     if: needs.find-changes.outputs.json == 'true'
     needs: find-changes
     steps:
-      # yamllint disable-line rule:comments
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Run JSON Lint
@@ -56,7 +54,6 @@ jobs:
     if: needs.find-changes.outputs.markdown == 'true'
     needs: find-changes
     steps:
-      # yamllint disable-line rule:comments
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Validate Markdown file
@@ -70,21 +67,17 @@ jobs:
     if: needs.find-changes.outputs.renovate-config == 'true'
     needs: find-changes
     steps:
-      # yamllint disable-line rule:comments
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-      # yamllint disable-line rule:comments
       - uses: suzuki-shunsuke/github-action-renovate-config-validator@b7cd2b598bb51d071a2474e98f55cc25f91abec1 # v0.1.3
 
   lint-shell:
     name: Check shell scripts
     runs-on: ubuntu-latest
     steps:
-      # yamllint disable-line rule:comments
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: ShellCheck
-        # yamllint disable-line rule:comments
         uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # 2.0.0
 
   lint-workflow:
@@ -96,7 +89,6 @@ jobs:
       image: rhysd/actionlint:1.6.26@sha256:2362769b1d75056da70e7af1b12d9e52746f3a123b8f22a4322869e8f2cd45f2
       options: --cpus 1 --user root
     steps:
-      # yamllint disable-line rule:comments
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Validate Github workflows
@@ -110,11 +102,9 @@ jobs:
     needs: find-changes
     if: needs.find-changes.outputs.yaml == 'true'
     steps:
-      # yamllint disable-line rule:comments
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: yaml-lint
-        # yamllint disable-line rule:comments
         uses: ibiqlik/action-yamllint@2576378a8e339169678f9939646ee3ee325e845c # v3.1.1
         with:
           config_file: .config/yamllint.yml
