@@ -11,7 +11,8 @@ jobs:
       pull-requests: write
     if: github.actor == 'renovate[bot]'
     steps:
-      # yamllint disable-line rule:comments
+      # xyamllint disable-line rule:comments
       - uses: hmarr/auto-approve-action@44888193675f29a83e04faf4002fa8c0b537b1e4 # v3.2.1
         with:
-          review-message: "Auto approved automated PR"
+          review-message: "Auto approved Renovate PR by organization"
+          github-token: ${{ secrets.PAT_FOR_PR_AUTO_APPROVAL }}
