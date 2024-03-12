@@ -12,6 +12,7 @@ jobs:
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
         with:
+          list-files: 'json'
           filters: |
             json:
               - '**/*.json'
@@ -30,12 +31,16 @@ jobs:
             yaml:
               - '**/*.yaml'
               - '**/*.yml'
+            
+            dockerfile:
+              - '**/*Dockerfile*'
     outputs:
       json: ${{ steps.changes.outputs.json }}
       markdown: ${{ steps.changes.outputs.markdown }}
       renovate-config: ${{ steps.changes.outputs.renovate-config }}
       workflow: ${{ steps.changes.outputs.workflow }}
       yaml: ${{ steps.changes.outputs.yaml }}
+      dockerfile_files: ${{ steps.changes.outputs.dockerfile_files }}
 
   lint-json:
     runs-on: ubuntu-latest
@@ -109,3 +114,18 @@ jobs:
         with:
           config_file: .config/yamllint.yml
           strict: true
+
+  lint-docker:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: find-changes
+    if: ${{ needs.find-changes.outputs.dockerfile_files != '[]' && needs.find-changes.outputs.dockerfile_files != '' }}
+    strategy:
+      matrix:
+        file: ${{ fromJson(needs.find-changes.outputs.dockerfile_files) }}
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ${{ matrix.file }}
