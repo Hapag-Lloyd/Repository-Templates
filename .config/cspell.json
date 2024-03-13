@@ -28,6 +28,14 @@
     "shellcheck",
     "shuf",
     "shunsuke",
-    "signoff"
+    "signoff",
+    "hadolint",
+    "hlag",
+    "Buildx",
+    "buildx",
+    "DOCKERHUB",
+    "buildcache",
+    "aquasecurity",
+    "vuln"
   ]
 }
