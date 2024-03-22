@@ -9,5 +9,5 @@ on:
 
 jobs:
   default:
-    uses: Hapag-Lloyd/Repository-Templates/.github/workflows/default_release_callable.yml@b045777615f09505b5a38104f84ff414f9cdfc94
+    uses: Hapag-Lloyd/Repository-Templates/.github/workflows/default_release_callable.yml@83145674c405973a9d1797a6b39887670938315b
     secrets: inherit
