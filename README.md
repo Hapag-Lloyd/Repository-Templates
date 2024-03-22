@@ -27,7 +27,7 @@ on:
 
 jobs:
   default:
-    uses: Hapag-Lloyd/Repository-Templates/.github/workflows/default_linter_callable.yml@83145674c405973a9d1797a6b39887670938315b
+    uses: Hapag-Lloyd/Repository-Templates/.github/workflows/default_linter_callable.yml@3a102f6e2e5326bde1f4b3ad8b9b4354323aef41
     secrets: inherit
 ```
 
