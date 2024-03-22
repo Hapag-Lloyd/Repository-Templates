@@ -12,7 +12,9 @@
   ],
   "ignoreWords": [
     "amannn",
+    "automerge",
     "codeowners",
+    "conventionalcommits",
     "codeql",
     "datasource",
     "dorny",
@@ -22,6 +24,7 @@
     "ludeeus",
     "markdownlint",
     "mktemp",
+    "ossrh",
     "pascalfrenz",
     "rhysd",
     "ruleset",
