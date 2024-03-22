@@ -3,9 +3,10 @@ name: Execute ChatOps command
 
 # yamllint disable-line rule:truthy
 on:
-  repository_dispatch:
-    types:
-      - help-command
+  workflow_call:
+#  repository_dispatch:
+#    types:
+#      - help-command
 
 jobs:
   help-command:

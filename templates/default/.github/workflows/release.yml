@@ -3,9 +3,10 @@ name: Create a release
 
 # yamllint disable-line rule:truthy
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+#  push:
+#    branches:
+#      - main
 
 jobs:
   release:
@@ -14,7 +15,7 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/create-github-app-token@2986852ad836768dfea7781f31828eb3e17990fa  # v1
+      - uses: actions/create-github-app-token@2986852ad836768dfea7781f31828eb3e17990fa # v1
         id: app-token
         with:
           app-id: ${{ vars.GET_TOKEN_APP_ID }}
@@ -22,8 +23,8 @@ jobs:
       # bootstrap-sha and release-as needs to be removed after first release
       - name: Release
         # yamllint disable-line rule:line-length
-        uses: google-github-actions/release-please-action@a2d8d683f209466ee8c695cd994ae2cf08b1642d  # ratchet:google-github-actions/release-please-action@v3
+        uses: google-github-actions/release-please-action@a2d8d683f209466ee8c695cd994ae2cf08b1642d # ratchet:google-github-actions/release-please-action@v3
         with:
           release-type: python
           token: ${{ steps.app-token.outputs.token }}
-          pull-request-header: ''
+          pull-request-header: ""

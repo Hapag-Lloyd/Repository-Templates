@@ -3,7 +3,8 @@ name: Terraform
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  workflow_call:
+#  pull_request:
 
 permissions:
   id-token: write

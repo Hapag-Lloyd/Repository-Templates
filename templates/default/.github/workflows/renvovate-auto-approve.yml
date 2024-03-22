@@ -2,16 +2,18 @@
 name: Approve all Renovate PRs automatically
 
 # yamllint disable-line rule:truthy
-on: pull_request_target
+on:
+  workflow_call:
+#  pull_request_target
 
 jobs:
-  auto-approve:
+  pr-auto-approve:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     if: github.actor == 'renovate[bot]'
     steps:
-      - uses: hmarr/auto-approve-action@44888193675f29a83e04faf4002fa8c0b537b1e4  # v3.2.1
+      - uses: hmarr/auto-approve-action@44888193675f29a83e04faf4002fa8c0b537b1e4 # v3.2.1
         with:
-          review-message: "Auto approved Renovate PR by organization"
+          review-message: "Auto approve Renovate PR (organization rule)"
           github-token: ${{ secrets.PAT_FOR_PR_AUTO_APPROVAL }}

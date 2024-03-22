@@ -3,8 +3,9 @@ name: "Close stale issues and PRs"
 
 # yamllint disable-line rule:truthy
 on:
-  schedule:
-    - cron: "25 2 * * *"
+  workflow_call:
+#  schedule:
+#    - cron: "25 2 * * *"
 
 jobs:
   stale:

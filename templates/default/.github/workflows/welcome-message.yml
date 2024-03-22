@@ -3,12 +3,13 @@ name: PR opened
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request_target:
-    types:
-      - opened
+  workflow_call:
+#  pull_request_target:
+#    types:
+#      - opened
 
 jobs:
-  add-welcome-message:
+  welcome-message:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
