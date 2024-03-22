@@ -12,7 +12,7 @@
       matchManagers: ["github-actions"],
       matchFileNames: [".github/workflows/this_*"],
       groupName: "GitHub Actions",
-      description: "Group all github-actions packages together as actions uses the same digest.",
+      description: "Group all github-actions packages together as actions use the same digest.",
     },
   ],
 }
