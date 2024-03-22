@@ -4,6 +4,9 @@ name: PR commented
 # yamllint disable-line rule:truthy
 on:
   workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
 #  issue_comment:
 #    types:
 #      - created

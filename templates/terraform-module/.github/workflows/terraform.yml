@@ -4,6 +4,11 @@ name: Terraform
 # yamllint disable-line rule:truthy
 on:
   workflow_call:
+    secrets:
+      AWS_TFLINT_ROLE_ARN:
+        required: true
+      AWS_REGION:
+        required: true
 #  pull_request:
 
 permissions:
