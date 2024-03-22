@@ -1,5 +1,5 @@
 ---
-name: Release
+name: Release Test
 
 # yamllint disable-line rule:truthy
 on:
@@ -17,14 +17,14 @@ on:
         required: true
 
 jobs:
-  release:
-    name: Release
+  dry-release:
+    name: Release dry-run
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout dry branch
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
-          fetch-depth: 0
+          ref: release-dry-run
 
       - name: Setup Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
@@ -34,11 +34,11 @@ jobs:
       - name: Install dependencies
         run: npm --prefix .release/ ci
 
-      - name: Release
-        run: npx --prefix .release/ semantic-release
+      - name: Dry run
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GH_TOKEN }}
           SERVER_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           SERVER_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGNING_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: unset GITHUB_ACTIONS && npx --prefix .release/ semantic-release --dry-run --no-ci --debug
