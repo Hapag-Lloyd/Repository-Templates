@@ -22,6 +22,9 @@ jobs:
 
             renovate-config:
               - 'renovate.json'
+              - '.github/renovate.json'
+              - 'renovate.json5'
+              - '.github/renovate.json5'
               - 'default.json'
 
             workflow:
