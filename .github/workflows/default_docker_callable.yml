@@ -20,6 +20,19 @@ on:
         description: "Upload results of trivy scan of docker image to Github Security page"
         default: false
 
+# how to use this shared workflow:
+# on:
+#   push:
+#     branches: # remove one or the other, depending on your naming of the default branch
+#       - "main"
+#       - "master"
+#     tags:
+#       - "v*.*.*"
+#   pull_request:
+#     branches:
+#       - "main"
+#       - "master"
+
 jobs:
   docker-build-push:
     runs-on: ubuntu-latest
