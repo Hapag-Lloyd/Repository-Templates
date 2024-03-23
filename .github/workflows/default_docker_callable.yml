@@ -37,7 +37,7 @@ jobs:
   docker-build-push:
     runs-on: ubuntu-latest
     env:
-      # hard-coded repository and organisation name here since this prefix must exist in order to push images
+      # hard-coded repository and organization name here since this prefix must exist in order to push images
       IMAGE_NAME: ghcr.io/hapag-lloyd/${{ inputs.image-name }}
     steps:
       - name: Checkout
