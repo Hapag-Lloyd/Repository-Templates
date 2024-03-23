@@ -1,5 +1,5 @@
 ---
-name: Docker
+name: Build & Push Docker Image
 
 # yamllint disable-line rule:truthy
 on:
