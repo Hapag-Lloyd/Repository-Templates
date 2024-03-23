@@ -1,0 +1,94 @@
+---
+name: Build & Push Docker Image
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_call:
+    inputs:
+      image-name:
+        type: string
+        required: true
+        description: "Name of the image. Usually it is sensible to set this to the repository name"
+      push:
+        type: boolean
+        required: false
+        description: "Flag to enable the workflow to actually push the built image to the registry"
+        default: false
+      upload-security-scan-results:
+        type: boolean
+        required: false
+        description: "Upload results of trivy scan of docker image to Github Security page"
+        default: false
+
+# how to use this shared workflow:
+# on:
+#   push:
+#     branches: # remove one or the other, depending on your naming of the default branch
+#       - "main"
+#       - "master"
+#     tags:
+#       - "v*.*.*"
+#   pull_request:
+#     branches:
+#       - "main"
+#       - "master"
+
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+    env:
+      # hard-coded repository and organization name here since this prefix must exist in order to push images
+      IMAGE_NAME: ghcr.io/hapag-lloyd/${{ inputs.image-name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Tags
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=pr
+            type=edge,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          load: true
+          tags: ${{ env.IMAGE_NAME }}:trivy-scan
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.18.0
+        with:
+          image-ref: ${{ env.IMAGE_NAME }}:trivy-scan
+          format: "sarif"
+          output: "trivy-results.sarif"
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: ${{ inputs.upload-security-scan-results }}
+        with:
+          sarif_file: "trivy-results.sarif"
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ inputs.push }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
