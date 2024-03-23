@@ -8,19 +8,24 @@ on:
       image-name:
         type: string
         required: true
+        description: "Name of the image. Usually it is sensible to set this to the repository name"
       push:
         type: boolean
         required: false
+        description: "Flag to enable the workflow to actually push the built image to the registry"
         default: false
-
-env:
-  ORG_NAME: hlag
-  REGISTRY: ghcr.io
+      upload-security-scan-results:
+        type: boolean
+        required: false
+        description: "Upload results of trivy scan of docker image to Github Security page"
+        default: false
 
 jobs:
   docker-build-push:
     runs-on: ubuntu-latest
-
+    env:
+      # hard-coded repository and organisation name here since this prefix must exist in order to push images
+      IMAGE_NAME: ghcr.io/hapag-lloyd/${{ inputs.image-name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +33,7 @@ jobs:
         uses: docker/metadata-action@v5
         id: meta
         with:
-          images: ${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ inputs.image-name }}
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=pr
             type=edge,enable={{is_default_branch}}
@@ -43,7 +48,7 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Image
@@ -51,17 +56,18 @@ jobs:
         with:
           context: .
           load: true
-          tags: ${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ inputs.image-name }}:temp
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ inputs.image-name }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ inputs.image-name }}:buildcache,mode=max
+          tags: ${{ env.IMAGE_NAME }}:trivy-scan
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.18.0
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ inputs.image-name }}:temp
+          image-ref: ${{ env.IMAGE_NAME }}:trivy-scan
           format: "sarif"
           output: "trivy-results.sarif"
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
+        if: ${{ inputs.upload-security-scan-results }}
         with:
           sarif_file: "trivy-results.sarif"
       - name: Build and push image
@@ -71,5 +77,5 @@ jobs:
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ inputs.image-name }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ inputs.image-name }}:buildcache,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
