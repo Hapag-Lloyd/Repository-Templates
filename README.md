@@ -36,15 +36,6 @@ and the latest Terraform version.
 
 In addition `tflint` is also executed.
 
-## Docker Template
-
-The template is stored in `templates/docker`.
-
-Use this template to initialize a repository which will contain software that will be built into a docker image.
-It can also be used to extend or customize existing docker images.
-
-It includes a Github Actions workflow to lint, check, build and push a docker image to Dockerhub.
-
 ## Planned
 
 - integrate Infracost
