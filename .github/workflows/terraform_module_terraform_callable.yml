@@ -9,6 +9,7 @@ on:
         required: true
       AWS_REGION:
         required: true
+# use the following to trigger the workflow in your repository
 #  pull_request:
 
 permissions:

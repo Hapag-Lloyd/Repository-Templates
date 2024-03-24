@@ -4,6 +4,7 @@ name: "Check spelling"
 # yamllint disable-line rule:truthy
 on:
   workflow_call:
+# use the following to trigger the workflow in your repository
 #  pull_request:
 
 jobs:
