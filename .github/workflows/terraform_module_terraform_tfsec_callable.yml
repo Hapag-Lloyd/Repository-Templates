@@ -3,9 +3,10 @@ name: TfSec
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
-  schedule:
-    - cron: "47 3 * * 1"
+  workflow_call:
+#  pull_request:
+#  schedule:
+#    - cron: "47 3 * * 1"
 
 jobs:
   tfsec:

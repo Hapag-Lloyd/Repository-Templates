@@ -3,7 +3,8 @@ name: Lint files
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  workflow_call:
+#  pull_request:
 
 jobs:
   find-changes:
@@ -21,11 +22,10 @@ jobs:
 
             renovate-config:
               - 'renovate.json'
+              - '.github/renovate.json'
+              - 'renovate.json5'
+              - '.github/renovate.json5'
               - 'default.json'
-
-            template-workflow:
-              - 'templates/**/.github/workflows/*.yml'
-              - 'templates/**/.github/workflows/*.yaml'
 
             workflow:
               - '.github/workflows/*.yml'
@@ -38,7 +38,6 @@ jobs:
       json: ${{ steps.changes.outputs.json }}
       markdown: ${{ steps.changes.outputs.markdown }}
       renovate-config: ${{ steps.changes.outputs.renovate-config }}
-      template-workflow: ${{ steps.changes.outputs.workflow }}
       workflow: ${{ steps.changes.outputs.workflow }}
       yaml: ${{ steps.changes.outputs.yaml }}
 
@@ -76,6 +75,15 @@ jobs:
 
       - uses: suzuki-shunsuke/github-action-renovate-config-validator@b54483862375f51910a60c4f498e927d4f3df466 # v1.0.1
 
+  lint-shell:
+    name: Check shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+
+      - name: ShellCheck
+        uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # 2.0.0
+
   lint-workflow:
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -91,25 +99,6 @@ jobs:
         run: |
           mkdir .git
           actionlint -color
-
-  lint-template-workflow:
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    needs: find-changes
-    if: needs.find-changes.outputs.template-workflow == 'true'
-    container:
-      image: rhysd/actionlint:1.6.27@sha256:d84eca815fc24f72546ec1f2f416d9500ad3349ce7db098cf7a52256f5fd4384
-      options: --cpus 1 --user root
-    steps:
-      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
-
-      - name: Validate Github workflow templates
-        run: |
-          mkdir .git
-
-          for file in templates/**/.github/workflows/*.yml; do
-            actionlint -color "$file"
-          done
 
   lint-yaml:
     runs-on: ubuntu-latest
