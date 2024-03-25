@@ -7,6 +7,7 @@ on:
     secrets:
       PAT_FOR_PR_AUTO_APPROVAL:
         required: true
+# use the following to trigger the workflow in your repository
 #  pull_request_target
 
 jobs:

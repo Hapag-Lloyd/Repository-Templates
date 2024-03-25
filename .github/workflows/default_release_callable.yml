@@ -15,6 +15,10 @@ on:
         required: true
       GPG_PASSPHRASE:
         required: true
+# use the following to trigger the workflow in your repository
+#  push:
+#    branches:
+#      - main
 
 jobs:
   release:

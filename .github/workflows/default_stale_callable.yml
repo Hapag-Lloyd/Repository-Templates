@@ -4,6 +4,7 @@ name: "Close stale issues and PRs"
 # yamllint disable-line rule:truthy
 on:
   workflow_call:
+# use the following to trigger the workflow in your repository
 #  schedule:
 #    - cron: "25 2 * * *"
 

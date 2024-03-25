@@ -4,6 +4,7 @@ name: PR commented
 # yamllint disable-line rule:truthy
 on:
   workflow_call:
+# use the following to trigger the workflow in your repository
 #  issue_comment:
 #    types:
 #      - created
