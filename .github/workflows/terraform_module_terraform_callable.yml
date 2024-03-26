@@ -3,7 +3,14 @@ name: Terraform
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  workflow_call:
+    secrets:
+      AWS_TFLINT_ROLE_ARN:
+        required: true
+      AWS_REGION:
+        required: true
+# use the following to trigger the workflow in your repository
+#  pull_request:
 
 permissions:
   id-token: write
@@ -21,11 +28,9 @@ jobs:
       run:
         working-directory: ${{ matrix.directories }}
     steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
-      # yamllint disable-line rule:comments
-      - uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2.0.3
+      - uses: hashicorp/setup-terraform@a1502cd9e758c50496cc9ac5308c4843bcd56d36 # v3.0.0
         with:
           terraform_version: ${{ matrix.terraform }}
 
@@ -38,19 +43,16 @@ jobs:
   tflint:
     runs-on: ubuntu-latest
     steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
-      # yamllint disable-line rule:comments
-      - uses: actions/cache@6998d139ddd3e68c71e9e398d8e40b71a2f39812 # v3.2.5
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         name: Cache plugin dir
         with:
           path: ~/.tflint.d/plugins
           key: tflint-${{ hashFiles('.config/tflint.hcl') }}
 
       - name: configure aws credentials
-        # yamllint disable-line rule:comments
-        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838 # v1.7.0
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
           role-session-name: tflint
@@ -59,7 +61,7 @@ jobs:
       - name: install tflint
         run: |
           # renovate: datasource=github-tags depName=terraform-linters/tflint
-          tflint_version="v0.45.0"
+          tflint_version="v0.50.3"
 
           curl -o tflint.zip -L \
             https://github.com/terraform-linters/tflint/releases/download/v${tflint_version}/tflint_linux_amd64.zip

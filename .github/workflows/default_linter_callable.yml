@@ -3,14 +3,15 @@ name: Lint files
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  workflow_call:
+# use the following to trigger the workflow in your repository
+#  pull_request:
 
 jobs:
   find-changes:
     runs-on: ubuntu-latest
     steps:
-      # yamllint disable-line rule:comments
-      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
         with:
           filters: |
@@ -22,11 +23,10 @@ jobs:
 
             renovate-config:
               - 'renovate.json'
+              - '.github/renovate.json'
+              - 'renovate.json5'
+              - '.github/renovate.json5'
               - 'default.json'
-
-            template-workflow:
-              - 'templates/**/.github/workflows/*.yml'
-              - 'templates/**/.github/workflows/*.yaml'
 
             workflow:
               - '.github/workflows/*.yml'
@@ -39,7 +39,6 @@ jobs:
       json: ${{ steps.changes.outputs.json }}
       markdown: ${{ steps.changes.outputs.markdown }}
       renovate-config: ${{ steps.changes.outputs.renovate-config }}
-      template-workflow: ${{ steps.changes.outputs.workflow }}
       workflow: ${{ steps.changes.outputs.workflow }}
       yaml: ${{ steps.changes.outputs.yaml }}
 
@@ -49,8 +48,7 @@ jobs:
     if: needs.find-changes.outputs.json == 'true'
     needs: find-changes
     steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: Run JSON Lint
         run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/json-lint/master/pipeline.sh)
@@ -61,8 +59,7 @@ jobs:
     if: needs.find-changes.outputs.markdown == 'true'
     needs: find-changes
     steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: Validate Markdown file
         run: |
@@ -75,11 +72,18 @@ jobs:
     if: needs.find-changes.outputs.renovate-config == 'true'
     needs: find-changes
     steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
-      # yamllint disable-line rule:comments
-      - uses: suzuki-shunsuke/github-action-renovate-config-validator@7ab3d8f19305664925f3e626580f075f14e40386 # v0.1.2
+      - uses: suzuki-shunsuke/github-action-renovate-config-validator@b54483862375f51910a60c4f498e927d4f3df466 # v1.0.1
+
+  lint-shell:
+    name: Check shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+
+      - name: ShellCheck
+        uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # 2.0.0
 
   lint-workflow:
     runs-on: ubuntu-latest
@@ -87,36 +91,15 @@ jobs:
     needs: find-changes
     if: needs.find-changes.outputs.workflow == 'true'
     container:
-      image: rhysd/actionlint:1.6.23@sha256:02ccb6d91e4cb4a7b21eb99d5274d257e81ae667688d730e89d7ea0d6d35db91
+      image: rhysd/actionlint:1.6.27@sha256:d84eca815fc24f72546ec1f2f416d9500ad3349ce7db098cf7a52256f5fd4384
       options: --cpus 1 --user root
     steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: Validate Github workflows
         run: |
           mkdir .git
           actionlint -color
-
-  lint-template-workflow:
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    needs: find-changes
-    if: needs.find-changes.outputs.template-workflow == 'true'
-    container:
-      image: rhysd/actionlint:1.6.23@sha256:02ccb6d91e4cb4a7b21eb99d5274d257e81ae667688d730e89d7ea0d6d35db91
-      options: --cpus 1 --user root
-    steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
-
-      - name: Validate Github workflow templates
-        run: |
-          mkdir .git
-
-          for file in templates/**/.github/workflows/*.yml; do
-            actionlint -color "$file"
-          done
 
   lint-yaml:
     runs-on: ubuntu-latest
@@ -124,11 +107,9 @@ jobs:
     needs: find-changes
     if: needs.find-changes.outputs.yaml == 'true'
     steps:
-      # yamllint disable-line rule:comments
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: yaml-lint
-        # yamllint disable-line rule:comments
         uses: ibiqlik/action-yamllint@2576378a8e339169678f9939646ee3ee325e845c # v3.1.1
         with:
           config_file: .config/yamllint.yml

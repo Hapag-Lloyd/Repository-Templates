@@ -2,21 +2,49 @@
 
 This repository stores templates used to setup new repositories. The templates are stored in `templates/`.
 
-Use `scripts/update_workflows.sh repo_to_update` to create a PR updating all files present in this repository. The
-script can be used to quickly update all workflows and other setup files.
+## Workflows
+
+This repository holds a set of GitHub workflows for the most common use cases. The workflows are stored in `.github/workflows/`.
+The prefix `default_` indicates workflows that shall be added to every nre repository. The prefix `terraform_module` indicates
+workflows that are useful for Terraform modules.
+
+Using these workflows in your repository is quite simple:
+
+```yaml
+---
+name: Lint files
+
+# Attention
+#
+# 1. for the "on" clause check the workflow definition called and copy the commented lines from there
+# 2. use the current commit hash of the Hapag-Lloyd/Repository-Templates repository. The hash is automatically updated by
+#    Renovate.
+#
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+
+jobs:
+  default:
+    uses: Hapag-Lloyd/Repository-Templates/.github/workflows/default_linter_callable.yml@e87de55f19cc1e069426c42120094e7e2446dad4
+    secrets: inherit
+```
+
+Workflow files starting with `this_*` can be ignored. They are used for this repository only.
 
 ## Default Templates
 
-Stored in `templates/default` and added to every new project. Contains a set of linters, release management, ChatOps
-tools, stale issue and PR management and a welcome message for contributors as well as a contribution guideline.
+Stored in `templates/default` and added to every new project. Contains basic configuration of all tools, like linters,
+release management, ChatOps, stale issue and PR management and a welcome message for contributors as well as a contribution
+guideline.
 
 To ensure a high quality of committed files, a [pre-commit](https://pre-commit.com/) configuration is also provided and
 can be installed with `pre-commit install`. The default configuration detects the most common errors in the code and
 runs very fast.
 
-Release management is done with [release-please](https://github.com/googleapis/release-please). All PRs are merged into
-main and the release tool automatically created a new PR with a changelog. As soon as this PR is merged, the release
-is tagged and published on GitHub.
+Release management is done with [semantic-release](https://github.com/semantic-release/semantic-release). Releases are automatically
+tagged and published on GitHub. Plugins for Maven, Npm, ... are available.
 
 For updating the dependencies automatically we provide a [Renovate](https://docs.renovatebot.com/) configuration file.
 Renovate automatically proposes a PR if a dependency is out of date.
@@ -35,7 +63,3 @@ It runs a `terraform validate` for all examples and the Terraform minimum versio
 and the latest Terraform version.
 
 In addition `tflint` is also executed.
-
-## Planned
-
-- integrate Infracost
